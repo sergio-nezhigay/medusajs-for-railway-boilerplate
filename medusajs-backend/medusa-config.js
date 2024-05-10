@@ -73,48 +73,14 @@ const plugins = [
       },
     },
   },
-  //  {
-  //    resolve: `medusa-plugin-sendgrid`,
-  //    options: {
-  //      api_key: process.env.SENDGRID_API_KEY,
-  //      from: process.env.SENDGRID_FROM,
-  //      order_placed_template: process.env.SENDGRID_ORDER_PLACED_ID,
-  //      customer_password_reset_template: process.env.SENDGRID_ORDER_PLACED_ID,
-  //      user_password_reset_template: process.env.SENDGRID_ORDER_PLACED_ID,
-  //    },
-  //  },
   {
-    resolve: `medusa-plugin-sendgrid-extras`,
+    resolve: `medusa-plugin-sendgrid`,
     options: {
       api_key: process.env.SENDGRID_API_KEY,
       from: process.env.SENDGRID_FROM,
-      extras: {
-        // Each function takes an event, and the transformed data
-        // returns whatever extra data you want to send to the
-        // dynamic template.
-        // Note that any keys returned in this object will overwrite keys in `transformedEvent` data
-        "order.placed": function orderPlacedExtra(event, transformedEvent) {
-          return {
-            foo: "bar",
-          };
-        },
-        "order.shipment_created": function orderShipmentCreatedExtra(
-          event,
-          transformedEvent
-        ) {
-          // ship
-          return {
-            now: new Date(),
-          };
-        },
-      },
       order_placed_template: process.env.SENDGRID_ORDER_PLACED_ID,
-      localization: {
-        "de-DE": {
-          // locale key
-          order_placed_template: process.env.SENDGRID_ORDER_PLACED_ID_LOCALIZED,
-        },
-      },
+      customer_password_reset_template: process.env.SENDGRID_ORDER_PLACED_ID,
+      user_password_reset_template: process.env.SENDGRID_ORDER_PLACED_ID,
     },
   },
 ];
