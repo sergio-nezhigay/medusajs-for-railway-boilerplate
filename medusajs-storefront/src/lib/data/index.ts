@@ -513,13 +513,14 @@ export const getProductsListWithSort = cache(
     queryParams?: StoreGetProductsParams
   }> {
     const limit = queryParams?.limit || 12
-
+    console.log("🚀 ~ queryParams:", queryParams)
     const {
       response: { products, count },
     } = await getProductsList({
       pageParam: 0,
       queryParams: {
         ...queryParams,
+        tags: ["ptag_01HXP5X0VTCCKD6VGHB08X1WHG"],
         limit: 100,
       },
       countryCode,
