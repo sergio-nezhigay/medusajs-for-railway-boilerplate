@@ -110,6 +110,36 @@ const plugins = [
       },
     },
   },
+  {
+    resolve: `medusa-multilingual-tolgee`,
+    options: {
+      baseURL: process.env.MEDUSA_ADMIN_TOLGEE_API_URL,
+      apiKey: process.env.MEDUSA_ADMIN_TOLGEE_API_KEY,
+      defaultLanguage: "en",
+      availableLanguages: [
+        { label: "English", tag: "en" },
+        { label: "German", tag: "de" },
+        { label: "Polish", tag: "pl" },
+      ],
+      productsKeys: ["title", "subtitle", "description"],
+      projectId: "7212",
+      enableUI: true,
+    },
+  },
+  {
+    resolve: `medusa-file-s3`,
+    options: {
+      s3_url: process.env.S3_URL,
+      bucket: process.env.S3_BUCKET,
+      region: process.env.S3_REGION,
+      access_key_id: process.env.S3_ACCESS_KEY_ID,
+      secret_access_key: process.env.S3_SECRET_ACCESS_KEY,
+      cache_control: process.env.S3_CACHE_CONTROL,
+      // optional
+      //  download_file_duration: process.env.S3_DOWNLOAD_FILE_DURATION,
+      //  prefix: process.env.S3_PREFIX,
+    },
+  },
 ];
 
 const modules = {
