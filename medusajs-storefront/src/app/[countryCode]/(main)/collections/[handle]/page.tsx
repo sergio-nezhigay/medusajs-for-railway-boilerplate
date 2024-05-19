@@ -4,6 +4,8 @@ import { notFound } from "next/navigation"
 import {
   getCollectionByHandle,
   getCollectionsList,
+  getProductsByCollectionHandle,
+  getTagsByCollection,
   listRegions,
 } from "@lib/data"
 import CollectionTemplate from "@modules/collections/templates"
@@ -62,17 +64,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function CollectionPage({ params, searchParams }: Props) {
   const { sortBy, page } = searchParams
 
-  const collection = await getCollectionByHandle(params.handle).then(
-    (collection) => collection
-  )
+  const collection = await getCollectionByHandle(params.handle)
 
   if (!collection) {
     notFound()
   }
 
+  const { tags } = await getTagsByCollection({
+    collection,
+    countryCode: params.countryCode,
+  })
+
   return (
     <CollectionTemplate
       collection={collection}
+      tags={tags}
       page={page}
       sortBy={sortBy}
       countryCode={params.countryCode}

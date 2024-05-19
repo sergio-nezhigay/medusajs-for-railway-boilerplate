@@ -1,4 +1,4 @@
-import { ProductCollection } from "@medusajs/medusa"
+import { ProductCollection, ProductTag } from "@medusajs/medusa"
 import { Suspense } from "react"
 
 import SkeletonProductGrid from "@modules/skeletons/templates/skeleton-product-grid"
@@ -11,12 +11,15 @@ export default function CollectionTemplate({
   collection,
   page,
   countryCode,
+  tags,
 }: {
   sortBy?: SortOptions
   collection: ProductCollection
   page?: string
   countryCode: string
+  tags: ProductTag[]
 }) {
+  console.log("🚀 ~ tags8888:", tags)
   const pageNumber = page ? parseInt(page) : 1
 
   return (

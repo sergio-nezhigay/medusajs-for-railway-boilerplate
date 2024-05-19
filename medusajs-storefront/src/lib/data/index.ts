@@ -3,6 +3,7 @@
 import {
   ProductCategory,
   ProductCollection,
+  ProductTag,
   Region,
   StoreGetProductsParams,
   StorePostAuthReq,
@@ -23,6 +24,8 @@ import { ProductCategoryWithChildren, ProductPreviewType } from "types/global"
 import { medusaClient } from "@lib/config"
 import medusaError from "@lib/util/medusa-error"
 import { cookies } from "next/headers"
+import { count } from "console"
+import products from "@medusajs/medusa/dist/api/routes/admin/products"
 
 const emptyResponse = {
   response: { products: [], count: 0 },
@@ -456,9 +459,12 @@ export const getProductsList = cache(async function ({
   queryParams?: StoreGetProductsParams
   countryCode: string
 }): Promise<{
-  response: { products: ProductPreviewType[]; count: number }
+  response: {
+    products: ProductPreviewType[]
+    count: number
+  }
   nextPage: number | null
-  queryParams?: StoreGetProductsParams
+  collection_id?: string[]
 }> {
   const limit = queryParams?.limit || 12
 
@@ -489,10 +495,12 @@ export const getProductsList = cache(async function ({
 
   const nextPage = count > pageParam + 1 ? pageParam + 1 : null
 
+  const id = queryParams?.collection_id
+
   return {
     response: { products: transformedProducts, count },
     nextPage,
-    queryParams,
+    collection_id: id,
   }
 })
 
@@ -508,19 +516,21 @@ export const getProductsListWithSort = cache(
     sortBy?: SortOptions
     countryCode: string
   }): Promise<{
-    response: { products: ProductPreviewType[]; count: number }
+    response: {
+      products: ProductPreviewType[]
+      count: number
+    }
     nextPage: number | null
     queryParams?: StoreGetProductsParams
   }> {
     const limit = queryParams?.limit || 12
-    //console.log("🚀 ~ queryParams:", queryParams)
+
     const {
       response: { products, count },
     } = await getProductsList({
       pageParam: 0,
       queryParams: {
         ...queryParams,
-        //tags: ["ptag_01HXP5X0VTCCKD6VGHB08X1WHG"],
         limit: 100,
       },
       countryCode,
@@ -636,6 +646,7 @@ export const getProductsByCollectionHandle = cache(
   }): Promise<{
     response: { products: ProductPreviewType[]; count: number }
     nextPage: number | null
+    collection_ids: string
   }> {
     const { id } = await getCollectionByHandle(handle).then(
       (collection) => collection
@@ -654,9 +665,44 @@ export const getProductsByCollectionHandle = cache(
     return {
       response,
       nextPage,
+      collection_ids: id,
     }
   }
 )
+
+export const getTagsByCollection = cache(async function getTagsByCollection({
+  collection,
+  countryCode,
+}: {
+  collection: ProductCollection
+  countryCode: string
+}): Promise<{
+  tags: ProductTag[]
+}> {
+  const { response } = await getProductsList({
+    queryParams: { collection_id: [collection.id], limit: 100 },
+    countryCode,
+  })
+    .then((res) => res)
+    .catch((err) => {
+      throw err
+    })
+
+  const tags = response.products.reduce((acc: ProductTag[], product) => {
+    if (product.tags) {
+      acc.push(...product.tags)
+    }
+    return acc
+  }, [])
+
+  const uniqueTags = tags.reduce((acc1: ProductTag[], current) => {
+    const r = acc1.find((curr) => curr.id === current.id)
+    const res = r ? acc1 : [...acc1, current]
+    return res
+  }, [])
+
+  return { tags: uniqueTags }
+})
 
 // Category actions
 export const listCategories = cache(async function () {

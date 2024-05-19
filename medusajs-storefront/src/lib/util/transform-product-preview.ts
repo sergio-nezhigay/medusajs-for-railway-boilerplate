@@ -27,6 +27,7 @@ const transformProductPreview = (
     id: product.id!,
     title: product.title!,
     handle: product.handle!,
+    tags: product.tags!,
     thumbnail: product.thumbnail!,
     created_at: product.created_at,
     price: cheapestVariant
