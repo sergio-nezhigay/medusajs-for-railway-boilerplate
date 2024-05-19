@@ -9,7 +9,7 @@ import FilterProducts from "./filter-products"
 
 type RefinementListProps = {
   sortBy: SortOptions
-  tagsOptions: ProductTag[]
+  tagsOptions?: ProductTag[]
   activeTags?: string
   search?: boolean
 }
@@ -41,7 +41,7 @@ const RefinementList = ({
   return (
     <div className="flex small:flex-col gap-12 py-4 mb-8 small:px-0 pl-6 small:min-w-[250px] small:ml-[1.675rem]">
       <SortProducts sortBy={sortBy} setQueryParams={setQueryParams} />
-      {tagsOptions.length && (
+      {tagsOptions && tagsOptions.length && (
         <FilterProducts
           activeTags={activeTags}
           tagsOptions={tagsOptions}
