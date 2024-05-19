@@ -12,19 +12,24 @@ export default function CollectionTemplate({
   page,
   countryCode,
   tags,
+  activeTags,
 }: {
-  sortBy?: SortOptions
   collection: ProductCollection
-  page?: string
   countryCode: string
+  page?: string
+  sortBy?: SortOptions
   tags: ProductTag[]
+  activeTags?: string
 }) {
-  console.log("🚀 ~ tags8888:", tags)
   const pageNumber = page ? parseInt(page) : 1
 
   return (
     <div className="flex flex-col small:flex-row small:items-start py-6 content-container">
-      <RefinementList sortBy={sortBy || "created_at"} />
+      <RefinementList
+        sortBy={sortBy || "created_at"}
+        tagsOptions={tags}
+        activeTags={activeTags}
+      />
       <div className="w-full">
         <div className="mb-8 text-2xl-semi">
           <h1>{collection.title}</h1>
@@ -32,6 +37,7 @@ export default function CollectionTemplate({
         <Suspense fallback={<SkeletonProductGrid />}>
           <PaginatedProducts
             sortBy={sortBy || "created_at"}
+            activeTags={activeTags}
             page={pageNumber}
             collectionId={collection.id}
             countryCode={countryCode}

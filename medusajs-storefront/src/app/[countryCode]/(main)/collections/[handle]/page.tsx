@@ -15,6 +15,7 @@ type Props = {
   params: { handle: string; countryCode: string }
   searchParams: {
     page?: string
+    filterBy?: string
     sortBy?: SortOptions
   }
 }
@@ -62,7 +63,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function CollectionPage({ params, searchParams }: Props) {
-  const { sortBy, page } = searchParams
+  const { sortBy, page, filterBy } = searchParams
 
   const collection = await getCollectionByHandle(params.handle)
 
@@ -78,9 +79,10 @@ export default async function CollectionPage({ params, searchParams }: Props) {
   return (
     <CollectionTemplate
       collection={collection}
-      tags={tags}
       page={page}
       sortBy={sortBy}
+      tags={tags}
+      activeTags={filterBy}
       countryCode={params.countryCode}
     />
   )
