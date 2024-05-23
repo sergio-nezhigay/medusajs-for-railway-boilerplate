@@ -38,7 +38,6 @@ export default function ProductActions({
 
   //  const variants = product.variants
   const { metadata, variants } = product
-  console.log("🚀 ~ metadata:", metadata)
 
   // initialize the option state
   useEffect(() => {
@@ -120,7 +119,7 @@ export default function ProductActions({
       variantId: variant.id,
       quantity: 1,
       countryCode,
-      metadata: product?.metadata,
+      metadata,
     })
 
     setIsAdding(false)

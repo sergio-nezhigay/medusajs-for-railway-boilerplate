@@ -37,7 +37,6 @@ export default async function Checkout() {
   if (!cart) {
     return notFound()
   }
-  console.log("🚀 ~ cart1:", cart.items)
 
   return (
     <div className="grid grid-cols-1 small:grid-cols-[1fr_416px] content-container gap-x-40 py-12">
