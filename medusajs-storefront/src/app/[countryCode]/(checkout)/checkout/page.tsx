@@ -20,8 +20,9 @@ const fetchCart = async () => {
     return notFound()
   }
 
-  const cart = await getCart(cartId).then((cart) => cart)
-
+  const cart = await getCart(cartId).then((cart) => {
+    return cart
+  })
   if (cart?.items.length) {
     const enrichedItems = await enrichLineItems(cart?.items, cart?.region_id)
     cart.items = enrichedItems as LineItem[]
@@ -36,6 +37,7 @@ export default async function Checkout() {
   if (!cart) {
     return notFound()
   }
+  console.log("🚀 ~ cart1:", cart.items)
 
   return (
     <div className="grid grid-cols-1 small:grid-cols-[1fr_416px] content-container gap-x-40 py-12">
