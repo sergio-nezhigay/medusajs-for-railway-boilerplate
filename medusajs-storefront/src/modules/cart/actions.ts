@@ -78,7 +78,7 @@ export async function addToCart({
   variantId: string
   quantity: number
   countryCode: string
-  metadata?: Record<string, any>
+  metadata?: Record<string, any> | null
 }) {
   const cart = await getOrSetCart(countryCode).then((cart) => cart)
 
