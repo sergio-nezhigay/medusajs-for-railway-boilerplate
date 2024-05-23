@@ -26,6 +26,7 @@ export default async function CheckoutForm() {
   if (!cart) {
     return null
   }
+  console.log("🚀 ~ cart:", cart)
 
   cart.checkout_step = cart && getCheckoutStep(cart)
 

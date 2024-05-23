@@ -56,6 +56,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!product) {
     notFound()
   }
+  console.log("🚀 ~ product:", product)
 
   return {
     title: `${product.title} | Medusa Store`,
