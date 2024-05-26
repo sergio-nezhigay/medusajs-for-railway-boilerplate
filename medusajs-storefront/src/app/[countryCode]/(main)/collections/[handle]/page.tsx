@@ -10,6 +10,7 @@ import {
 } from "@lib/data"
 import CollectionTemplate from "@modules/collections/templates"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
+import { ProductTag } from "@medusajs/medusa"
 
 type Props = {
   params: { handle: string; countryCode: string }
@@ -71,10 +72,11 @@ export default async function CollectionPage({ params, searchParams }: Props) {
     notFound()
   }
 
-  const { tags } = await getTagsByCollection({
-    collection,
-    countryCode: params.countryCode,
-  })
+  //  const { tags } = await getTagsByCollection({
+  //    collection,
+  //    countryCode: params.countryCode,
+  //  })
+  const tags: ProductTag[] = []
 
   return (
     <CollectionTemplate
