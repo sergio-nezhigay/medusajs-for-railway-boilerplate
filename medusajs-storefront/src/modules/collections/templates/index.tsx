@@ -5,6 +5,7 @@ import SkeletonProductGrid from "@modules/skeletons/templates/skeleton-product-g
 import RefinementList from "@modules/store/components/refinement-list"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import PaginatedProducts from "@modules/store/templates/paginated-products"
+import PaginatedProducts2 from "@modules/store/templates/paginated-products2"
 
 export default function CollectionTemplate({
   sortBy,
@@ -35,7 +36,7 @@ export default function CollectionTemplate({
           <h1>{collection.title}</h1>
         </div>
         <Suspense fallback={<SkeletonProductGrid />}>
-          <PaginatedProducts
+          <PaginatedProducts2
             sortBy={sortBy || "created_at"}
             activeTags={activeTags}
             page={pageNumber}
