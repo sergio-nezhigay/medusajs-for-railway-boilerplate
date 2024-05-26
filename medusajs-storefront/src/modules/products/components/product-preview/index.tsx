@@ -18,19 +18,20 @@ export default async function ProductPreview({
   isFeatured?: boolean
   region: Region
 }) {
-  const pricedProduct = await retrievePricedProductById({
-    id: productPreview.id,
-    regionId: region.id,
-  }).then((product) => product)
+  console.log("🚀 ~ productPreview:", productPreview)
+  //  const pricedProduct = await retrievePricedProductById({
+  //    id: productPreview.id,
+  //    regionId: region.id,
+  //  }).then((product) => product)
 
-  if (!pricedProduct) {
-    return null
-  }
+  //  if (!pricedProduct) {
+  //    return null
+  //  }
 
-  const { cheapestPrice } = getProductPrice({
-    product: pricedProduct,
-    region,
-  })
+  //  const { cheapestPrice } = getProductPrice({
+  //    product: pricedProduct,
+  //    region,
+  //  })
 
   return (
     <LocalizedClientLink
@@ -46,7 +47,8 @@ export default async function ProductPreview({
         <div className="flex txt-compact-medium mt-4 justify-between">
           <Text className="text-ui-fg-subtle">{productPreview.title}</Text>
           <div className="flex items-center gap-x-2">
-            {cheapestPrice && <PreviewPrice price={cheapestPrice} />}
+            {/*{cheapestPrice && <PreviewPrice price={cheapestPrice} />}*/}
+            <p>100грн</p>
           </div>
         </div>
       </div>
